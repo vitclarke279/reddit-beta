@@ -1,6 +1,8 @@
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
+from core.views import stats
+
 
 tags_metadata = [
     {
@@ -21,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(stats.view)
 
 
 @app.get(
