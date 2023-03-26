@@ -1,11 +1,27 @@
-from core.views.utils import create_router
+from fastapi import Query
+
+from core.views.utils import create_router, get_pushshift_data, get_mood_from_text
+
 
 view = create_router(base_api_path='stats')
 
 
-@view.get('/subreddit-activity')
-async def subreddit_activity():
+@view.get('/subreddit-mood')
+async def subreddit_mood(
+    subreddit:  str = Query(
+        None,
+        description='Return current mood for specified subreddit.',
+        example='happy'
+    ),
+):
     """
-    TODO: Add doc string
+    Returns the current mood of a subreddit: positive, negative.
     """
-    return "you want some stats?"
+    data = get_pushshift_data(
+        data_type='comment',
+        subreddit=subreddit
+    )['data']
+
+    mood = get_mood_from_text(text=[item['body'] for item in data])
+
+    return mood
