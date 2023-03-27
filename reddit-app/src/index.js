@@ -1,16 +1,14 @@
-import React from "react";
-import { render } from 'react-dom';
-import { ChakraProvider } from "@chakra-ui/react";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ChakraProvider } from '@chakra-ui/react';
+import App from './App';
+import Header from './components/Header'
 
-import Header from "./components/Header";
 
-function App() {
-  return (
-    <ChakraProvider>
-      <Header />
-    </ChakraProvider>
-  )
-}
-
-const rootElement = document.getElementById("root")
-render(<App />, rootElement)
+ReactDOM.render(
+  <ChakraProvider>
+    <Header />
+    <App />
+  </ChakraProvider>,
+  document.getElementById('root')
+);
