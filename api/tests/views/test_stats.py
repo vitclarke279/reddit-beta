@@ -1,18 +1,7 @@
 import json
 from unittest.mock import MagicMock, Mock, patch
-from unittest import TestCase
 
-# from tests.views import ApiTestCase
-
-from fastapi.testclient import TestClient
-
-from start_api import app
-
-
-class ApiTestCase(TestCase):
-    def setUp(self):
-        super().setUp()
-        self.client = TestClient(app)
+from tests.views import ApiTestCase
 
 
 class TestSubredditMoodAPI(ApiTestCase):
