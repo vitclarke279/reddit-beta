@@ -19,6 +19,8 @@ def get_pushshift_data(data_type: str, **kwargs) -> dict:
     payload = kwargs
 
     request = requests.get(base_url, params=payload)
+    if request.status_code != 200:
+        raise Exception(f'Pushshift api is returning {request.status_code}')
     return request.json()
 
 
