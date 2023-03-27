@@ -21,7 +21,8 @@ def get_pushshift_data(data_type: str, **kwargs) -> dict:
     request = requests.get(base_url, params=payload)
     if request.status_code != 200:
         raise Exception(f'Pushshift api is returning {request.status_code}')
-    return request.json()
+    else:
+        return request.json()
 
 
 def _compound_score_to_mood_mapper(score: int) -> str:
