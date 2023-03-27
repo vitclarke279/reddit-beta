@@ -25,7 +25,7 @@ def get_pushshift_data(data_type: str, **kwargs) -> dict:
         return request.json()
 
 
-def _compound_score_to_mood_mapper(score: int) -> str:
+def compound_score_to_mood_mapper(score: int) -> str:
     """
     Map a passed through compound score to a corresponding mood.
     """
@@ -35,12 +35,39 @@ def _compound_score_to_mood_mapper(score: int) -> str:
         return 'negative'
 
 
-def get_mood_from_text(text: list) -> str:
+def get_mean_polarity_score(polarity_value: str, list_of_scores: list) -> int:
+    """
+    Get the mean polarity value of a given list of scores.
+    """
+    mean_value = mean([
+        score[polarity_value] for score in list_of_scores
+    ])
+    return mean_value
+
+
+def get_mean_mood_polarity_scores_from_text(text: list) -> str:
     """
     Process a list of text items to get the collective mood of the text.
     """
-    scores = [
-        sia.polarity_scores(item)['compound'] for item in text
+    polarity_scores = [
+        sia.polarity_scores(item) for item in text
     ]
-    mood = _compound_score_to_mood_mapper(mean(scores))
-    return mood
+
+    compound_score = get_mean_polarity_score(
+        polarity_value='compound',
+        list_of_scores=polarity_scores
+    )
+    positive_score = get_mean_polarity_score(
+        polarity_value='positive',
+        list_of_scores=polarity_scores
+    )
+    negative_score = get_mean_polarity_score(
+        polarity_value='negative',
+        list_of_scores=polarity_scores
+    )
+
+    return {
+        'positive': positive_score,
+        'negative': negative_score,
+        'compound': compound_score
+    }
