@@ -16,3 +16,28 @@
 - React client side to interact with the FastApi app.
 - Use Docker to run the services locally.
 
+## Development
+
+### Dependencies
+- Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- Install [make](https://www.gnu.org/software/make/). For Linux, use your distribution's package manager e.g. Ubuntu: `sudo apt-get install make`
+
+### Running
+- run: `make start`
+
+### API documentation
+There are two ways to access the API documentation. With the app running:
+
+- go to: [localhost:8000/docs](http://localhost:8000/docs)
+- Or go to: [localhost:8000/redoc](http://localhost:8000/redoc)
+
+### Accessing Reddit Home page
+- go to: [localhost:3000](http://localhost:3000)
+
+
+### Running backend tests
+You can run the backend tests from inside your container:
+ 1. `make start` - ensure your containers are running first
+ 1. `make shell` - in a separate window
+ 2. `pytest <PATH_TO_YOUR_TEST>` - if you don't supply a path to a test, the whole test suite will run
+
