@@ -1,4 +1,4 @@
-from fastapi import Query
+from fastapi import Query, HTTPException
 
 from core.views.utils import create_router, get_pushshift_data, get_mood_from_text
 
@@ -17,10 +17,14 @@ async def subreddit_mood(
     """
     Returns the current mood of a subreddit: positive, negative.
     """
-    data = get_pushshift_data(
-        data_type='comment',
-        subreddit=subreddit
-    )['data']
+    try:
+        data = get_pushshift_data(
+            data_type='comment',
+            subreddit=subreddit
+        )['data']
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
     mood = get_mood_from_text(text=[item['body'] for item in data])
 
