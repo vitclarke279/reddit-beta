@@ -10,4 +10,4 @@ COPY . /code/.
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:8000/health/ || exit 1
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "start_api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
